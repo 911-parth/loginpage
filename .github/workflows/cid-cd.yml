@@ -1,40 +1,21 @@
-name: CI/CD Pipeline
+name: Tests
 
 on:
   push:
     branches: ["main"]
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install backend deps
-        run: cd backend && npm install
-
-      - name: Run tests
-        run: cd backend && npm test
-
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to server with Docker
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            cd ${{ secrets.DEPLOY_PATH }}
-            git pull origin main
-            docker compose down
-            docker compose up -d --build
+      - name: Install + Test (backend)
+        run: |
+          cd backend
+          npm install
+          npm test
