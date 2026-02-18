@@ -2,5 +2,8 @@
   "devDependencies": {
     "gh-pages": "^6.3.0",
     "jest": "^30.2.0"
+  },
+  "dependencies": {
+    "vercel": "^50.18.2"
   }
 }
