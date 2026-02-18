@@ -6,3 +6,6 @@ test("2 + 2 should equal 4", () => {
 test("3 + 1 should equal 4", () => {
   expect(sum(3, 1)).toBe(4);
 });
+test("3 + 1 should equal 4", () => {
+  expect(sum(4, 0)).toBe(4);
+});
